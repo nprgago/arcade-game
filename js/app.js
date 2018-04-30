@@ -35,10 +35,47 @@ Enemy.prototype.render = function() {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 };
 
-// Now write your own player class
-// This class requires an update(), render() and
-// a handleInput() method.
+// player class
+var Player = function () {
+  // Random attribution Mechanism for player avatar selection
+  this.sprite = (function() {
+    const players = [
+      'char-boy.png',
+      'char-cat-girl.png',
+      'char-horn-girl.png',
+      'char-pink-girl.png',
+      'char-princess-girl.png'
+    ];
+    const path = 'images/' + players[Math.floor(Math.random() * players.length)];
+    return path;
+  })();
+  // Player Initial Position
+  this.x = 200;
+  this.y = 400;
+  this.handleInput = function(key) {
+    // Player Position and Movement Mechanism.
+    if (key === 'left') { this.x -= 100; };
+    if (key === 'up') { this.y -= 85; };
+    if (key === 'right') { this.x += 100; };
+    if (key === 'down') { this.y += 85; };
+  };
+};
 
+Player.prototype.update = function () {
+  // Lock player into screen grid;
+  if (this.x < 0) { this.x = 0; };
+  if (this.x > 400) { this.x = 400; };
+  if (this.y > 400) { this.y = 400; } ;
+  // If player arrives to water, he wins and position is reset to initial values.
+  if (this.y < 60 ) {
+    this.x = 200;
+    this.y= 400;
+  } ;
+};
+
+Player.prototype.render = function() {
+    ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
+};
 
 // Instantiate of objects.
 let allEnemies = [];
@@ -49,8 +86,8 @@ for (let i = 0; i < enemiesNumber; ++i) {
   let enemy = new Enemy;
   allEnemies.push(enemy);
 };
-
-
+// Create player object
+const player = new Player();
 
 // This listens for key presses and sends the keys to your
 // Player.handleInput() method. You don't need to modify this.
