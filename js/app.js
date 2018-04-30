@@ -1,4 +1,4 @@
-// Enemies our player must avoid
+// Enemy object function constructor
 var Enemy = function() {
     // Setting Enemy Image
     this.sprite = 'images/enemy-bug.png';
@@ -15,6 +15,7 @@ var Enemy = function() {
     })();
 };
 
+// Enemy prototype inheritance
 // Update the enemy's position, required method for game
 Enemy.prototype.update = function(dt) {
   if (this.x < 600) {
@@ -30,12 +31,13 @@ Enemy.prototype.update = function(dt) {
   }
 };
 
+// Enemy prototype inheritance
 // Draw the enemy on the screen, required method for game
 Enemy.prototype.render = function() {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 };
 
-// player class
+// Player object function constructor
 var Player = function () {
   // Random attribution Mechanism for player avatar selection
   this.sprite = (function() {
@@ -61,6 +63,7 @@ var Player = function () {
   };
 };
 
+// Player prototype inheritance
 Player.prototype.update = function () {
   // Lock player into screen grid;
   if (this.x < 0) { this.x = 0; };
@@ -73,6 +76,7 @@ Player.prototype.update = function () {
   } ;
 };
 
+// Player prototype inheritance
 Player.prototype.render = function() {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 };
@@ -90,7 +94,7 @@ for (let i = 0; i < enemiesNumber; ++i) {
 const player = new Player();
 
 // This listens for key presses and sends the keys to your
-// Player.handleInput() method. You don't need to modify this.
+// Player.handleInput() method. 
 document.addEventListener('keyup', function(e) {
     var allowedKeys = {
         37: 'left',
