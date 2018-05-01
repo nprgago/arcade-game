@@ -68,17 +68,20 @@ var Player = function () {
   this.level = function (mode = true) {
     if (mode) {
       //If true: increment score, speed by 1,5 and display winning alert
-      ++this.score;
+      this.score += 20 ;
       for (const bugEnemy of allEnemies) { bugEnemy.speed = bugEnemy.speed * 1.5; }
       alert(`Great! You have LEVEL UP!\nYour score is ${this.score}`);
     } else {
       //If false and > 0: decrement score, speed by 1,5 and display lossing alert
       //If false and 0:  only display lossing alert
-      if (this.score > 0) {
-        --this.score;
+      if (this.score > 20) {
+        this.score -= 20 ;
         for (const bugEnemy of allEnemies) { bugEnemy.speed = bugEnemy.speed / 1.5; }
         alert(`Ops! Try to avoid all the enemies bugs!\nYour score is ${this.score}.`);
-      } else { alert(`Ops! Try to avoid all the enemies bugs!\nYour score is ${this.score}.`); }
+      } else {
+        this.score = 0;
+        alert(`Ops! Try to avoid all the enemies bugs!\nYour score is ${this.score}.`);
+      }
     }
   };
 };
@@ -102,15 +105,69 @@ Player.prototype.render = function() {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 };
 
+// Gems object function constructor
+var Gems = function() {
+  this.sprite = (function() {
+    const gemsImage = [
+      'Gem-Blue.png',
+      'Gem-Green.png',
+      'Gem-Orange.png'
+    ];
+    const path = 'images/' + gemsImage[Math.floor(Math.random() * gemsImage.length)];
+    return path;
+  })();
+  this.x = (function() {
+    const xPositions = [25, 125, 225, 325, 425];
+    return xPositions[Math.floor(Math.random() * xPositions.length)];
+  })();
+  this.y = (function () {
+    const yPositions = [120, 205, 290];
+    return yPositions[Math.floor(Math.random() * yPositions.length)];
+  })();
+  this.width = 55;
+  this.height = 85;
+};
+
+// Gems prototype inheritance
+Gems.prototype.update = function () {
+  if (this.x === (player.x + 25) && this.y > player.y) {
+    // If player catches gem, give player 1 score point
+    // and give another random localtion for the gem.
+    this.x = (function() {
+      const xPositions = [25, 125, 225, 325, 425];
+      return xPositions[Math.floor(Math.random() * xPositions.length)];
+    })();
+    this.y = (function () {
+      const yPositions = [120, 205, 290];
+      return yPositions[Math.floor(Math.random() * yPositions.length)];
+    })();
+    player.score += 1;
+  }
+};
+
+// Gems prototype inheritance
+Gems.prototype.render = function() {
+    ctx.drawImage(Resources.get(this.sprite), this.x, this.y, this.width, this.height);
+};
+
 // Instantiate of objects.
 let allEnemies = [];
-// Set number of enemies
+let allGems = [];
+
+// Set number of enemies | Gems
 const enemiesNumber = 5;
-// Create enemies objects and append them to list
+const gemsNumber = 5;
+
+// Create enemies objects | Gems and append them to list
 for (let i = 0; i < enemiesNumber; ++i) {
   let enemy = new Enemy();
   allEnemies.push(enemy);
 }
+for (let i = 0; i < gemsNumber; ++i) {
+  let gems = new Gems();
+  allGems.push(gems);
+}
+
 // Create player object
 const player = new Player();
 
