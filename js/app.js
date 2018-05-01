@@ -25,7 +25,7 @@ Enemy.prototype.update = function(dt) {
       player.level(false);
       player.x = 200;
       player.y = 400;
-    };
+    }
   // If enemy is offscreen reset position to a random value between -499 and 0
   } else {
     this.x = Math.floor(Math.random() * (-500 + 1));
@@ -57,42 +57,42 @@ var Player = function () {
   this.y = 400;
   this.handleInput = function(key) {
     // Player Position and Movement Mechanism.
-    if (key === 'left') { this.x -= 100; };
-    if (key === 'up') { this.y -= 85; };
-    if (key === 'right') { this.x += 100; };
-    if (key === 'down') { this.y += 85; };
+    if (key === 'left') { this.x -= 100; }
+    if (key === 'up') { this.y -= 85; }
+    if (key === 'right') { this.x += 100; }
+    if (key === 'down') { this.y += 85; }
   };
   this.score = 0;
   this.level = function (mode = true) {
     if (mode) {
       //If true: increment score, speed by 1,5 and display winning alert
       ++this.score;
-      for (bugEnemy of allEnemies) { bugEnemy.speed = bugEnemy.speed * 1.5; };
+      for (const bugEnemy of allEnemies) { bugEnemy.speed = bugEnemy.speed * 1.5; }
       alert(`Great! You have LEVEL UP!\nYour score is ${this.score}`);
     } else {
       //If false and > 0: decrement score, speed by 1,5 and display lossing alert
       //If false and 0:  only display lossing alert
       if (this.score > 0) {
         --this.score;
-        for (bugEnemy of allEnemies) { bugEnemy.speed = bugEnemy.speed / 1.5; };
+        for (const bugEnemy of allEnemies) { bugEnemy.speed = bugEnemy.speed / 1.5; }
         alert(`Ops! Try to avoid all the enemies bugs!\nYour score is ${this.score}.`);
       } else { alert(`Ops! Try to avoid all the enemies bugs!\nYour score is ${this.score}.`); }
     }
-  }
+  };
 };
 
 // Player prototype inheritance
 Player.prototype.update = function () {
   // Lock player into screen grid;
-  if (this.x < 0) { this.x = 0; };
-  if (this.x > 400) { this.x = 400; };
-  if (this.y > 400) { this.y = 400; } ;
+  if (this.x < 0) { this.x = 0; }
+  if (this.x > 400) { this.x = 400; }
+  if (this.y > 400) { this.y = 400; }
   // If player arrives to water, he wins and position is reset to initial values.
   if (this.y < 60 ) {
     this.level();
     this.x = 200;
     this.y= 400;
-  } ;
+  }
 };
 
 // Player prototype inheritance
@@ -106,9 +106,9 @@ let allEnemies = [];
 const enemiesNumber = 5;
 // Create enemies objects and append them to list
 for (let i = 0; i < enemiesNumber; ++i) {
-  let enemy = new Enemy;
+  let enemy = new Enemy();
   allEnemies.push(enemy);
-};
+}
 // Create player object
 const player = new Player();
 
