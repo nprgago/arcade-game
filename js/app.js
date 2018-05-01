@@ -1,3 +1,5 @@
+'use strict';
+
 // Enemy object function constructor
 var Enemy = function() {
     // Setting Enemy Image
