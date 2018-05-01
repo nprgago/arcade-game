@@ -15,6 +15,7 @@ This is a game project from Udacity Front-End Developer Course. In this game, th
 
 * Move the player with the arrow keys (up, down, left, right);
 * Find the best path to the water and get score points;
+* Collect the gems for additional score points;
 * Avoid colliding with enemies bugs and loosing score points.
 
 ## Development
